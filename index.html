@@ -971,6 +971,7 @@ body { font-size: var(--fs-base, 0.9rem); }
   .nav-actions .lang-switcher { display: none; }
 
   .btn-icon { width: 32px; height: 32px; font-size: 0.9rem; }
+  #btn-nav-export, #btn-nav-import { display: none; }
 
   .nav-user-badge { padding: 3px 4px 3px 3px; gap: 5px; }
   .nav-user-avatar { width: 22px; height: 22px; font-size: 0.68rem; }
@@ -1543,6 +1544,13 @@ body.auth-active { overflow: hidden; }
       <div class="lang-option" onclick="setLang('fr')" data-lang="fr"><span class="lang-native">FR</span>Français</div>
       <div class="lang-option" onclick="setLang('ar')" data-lang="ar"><span class="lang-native">عر</span>العربية</div>
     </div>
+
+    <div class="settings-label" id="lbl-dataBackup">DATA BACKUP</div>
+    <div class="mode-toggle">
+      <button class="mode-btn" onclick="exportAllRecipes()"><span>📦</span> <span id="txt-exportBackup">Export Recipes</span></button>
+      <button class="mode-btn" onclick="document.getElementById('importFileInput2').click()"><span>📥</span> <span id="txt-importBackup">Import Backup</span></button>
+      <input type="file" id="importFileInput2" accept="application/json" style="display:none" onchange="importAllRecipes(event)" />
+    </div>
   </div>
 </div>
 
@@ -1563,9 +1571,9 @@ body.auth-active { overflow: hidden; }
       <button class="lang-opt" id="navLangFr" data-lang="fr" onclick="setLang('fr')">FR</button>
       <button class="lang-opt" id="navLangAr" data-lang="ar" onclick="setLang('ar')">ع</button>
     </div>
-    <button class="btn-icon" onclick="exportAllRecipes()" title="Backup / Export all recipes">📦</button>
+    <button class="btn-icon" onclick="exportAllRecipes()" title="Backup / Export all recipes" id="btn-nav-export">📦</button>
     <input type="file" id="importFileInput" accept="application/json" style="display:none" onchange="importAllRecipes(event)" />
-    <button class="btn-icon" onclick="document.getElementById('importFileInput').click()" title="Import backup">📥</button>
+    <button class="btn-icon" onclick="document.getElementById('importFileInput').click()" title="Import backup" id="btn-nav-import">📥</button>
     <button class="btn-icon" onclick="openSettings()" title="Settings">⚙️</button>
     <div id="navUserBadge" class="nav-user-badge" style="display:none">
       <div class="nav-user-avatar" id="navUserAvatar">?</div>
@@ -1901,6 +1909,7 @@ const T = {
     recipes:'Recipes',new:'New',
     customize:'✦ Customize Notebook',colorTheme:'COLOR THEME',
     decoStyle:'BACKGROUND STYLE',mode:'DISPLAY MODE',language:'LANGUAGE',
+    dataBackup:'DATA BACKUP', exportBackup:'Export Recipes', importBackup:'Import Backup',
     fontStyle:'FONT SIZE',cornerStyle:'CORNERS',
     fsSm:'Small',fsMd:'Medium',fsLg:'Large',fsXl:'X-Large',
     light:'Light',dark:'Dark',
@@ -1960,6 +1969,7 @@ const T = {
     recipes:'Recettes',new:'Nouveau',
     customize:'✦ Personnaliser',colorTheme:'THÈME DE COULEUR',
     decoStyle:'STYLE DE FOND',mode:'MODE AFFICHAGE',language:'LANGUE',
+    dataBackup:'SAUVEGARDE DES DONNÉES', exportBackup:'Exporter les recettes', importBackup:'Importer une sauvegarde',
     fontStyle:'TYPOGRAPHIE',cornerStyle:'COINS',
     light:'Clair',dark:'Sombre',
     thWarm:'Crème Chaude',thSage:'Jardin Sauge',thBerry:'Fruits Rouges',thInk:'Encre & Papier',thSaffron:'Épice Safran',
@@ -2018,6 +2028,7 @@ const T = {
     recipes:'الوصفات',new:'جديد',
     customize:'✦ تخصيص الدفتر',colorTheme:'لون السمة',
     decoStyle:'نمط الخلفية',mode:'وضع العرض',language:'اللغة',
+    dataBackup:'النسخ الاحتياطي', exportBackup:'تصدير الوصفات', importBackup:'استيراد نسخة احتياطية',
     fontStyle:'حجم الخط',cornerStyle:'الزوايا',
     fsSm:'صغير',fsMd:'متوسط',fsLg:'كبير',fsXl:'كبير جداً',
     light:'فاتح',dark:'داكن',
@@ -2268,6 +2279,7 @@ function updateTranslations() {
     'txt-shareLinkCopy': t.shareLinkCopy, 'txt-shareLinkWhatsapp': t.shareLinkWhatsapp,
     'txt-customize': t.customize, 'lbl-colorTheme': t.colorTheme,
     'lbl-decoStyle': t.decoStyle, 'lbl-mode': t.mode, 'lbl-language': t.language,
+    'lbl-dataBackup': t.dataBackup, 'txt-exportBackup': t.exportBackup, 'txt-importBackup': t.importBackup,
     'lbl-fontStyle': t.fontStyle, 'lbl-cornerStyle': t.cornerStyle,
     'fs-sm': t.fsSm||'Small', 'fs-md': t.fsMd||'Medium', 'fs-lg': t.fsLg||'Large', 'fs-xl': t.fsXl||'X-Large',
     'txt-light': t.light, 'txt-dark': t.dark,
