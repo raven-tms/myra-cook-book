@@ -1624,6 +1624,7 @@ body.auth-active { overflow: hidden; }
 <!-- RECIPE LIST PAGE -->
 <div class="page" id="page-list">
   <div class="search-bar" style="display:flex;gap:8px;align-items:center;">
+    <button class="btn-icon" onclick="showPage('home')" title="Back" id="btn-list-home" style="font-size:20px;line-height:1;">←</button>
     <input type="text" id="searchInput" placeholder="Search recipes..." oninput="renderList()" style="flex:1;" />
     <button class="btn-icon" id="favToggleBtn" onclick="toggleFavoritesFilter()" title="Favorites" style="font-size:20px;line-height:1;">🤍</button>
     <button class="btn-icon" onclick="showPage('collections')" title="Collections" style="font-size:20px;line-height:1;">🗂️</button>
