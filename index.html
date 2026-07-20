@@ -224,7 +224,7 @@ nav {
   border-bottom: 1px solid var(--border);
   padding: 0 1.5rem;
   display: flex; align-items: center; justify-content: space-between;
-  height: 62px;
+  height: 62px; min-height: 62px; max-height: 62px; overflow: visible;
   position: sticky; top: 0; z-index: 100;
   transition: background var(--transition), border-color var(--transition);
   backdrop-filter: blur(12px);
@@ -957,7 +957,7 @@ body { font-size: var(--fs-base, 0.9rem); }
    (language quick-switch, button labels, user name) so the whole bar
    always fits, with no clipped/unreachable controls. */
 @media (max-width: 560px) {
-  nav { padding: 0 0.75rem; height: 56px; }
+  nav { padding: 0 0.75rem; height: 56px; min-height: 56px; max-height: 56px; }
   .nav-actions { gap: 5px; }
   .nav-brand { gap: 7px; }
   .nav-brand-icon { width: 32px; height: 32px; font-size: 1.05rem; }
@@ -1126,11 +1126,13 @@ body.auth-active { overflow: hidden; }
   display: flex; align-items: center; gap: 8px;
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 99px; padding: 4px 6px 4px 4px;
+  flex-shrink: 0;
 }
 .nav-user-avatar {
   width: 26px; height: 26px; border-radius: 50%;
   object-fit: cover; display: flex; align-items: center; justify-content: center;
   background: var(--accent); color: #fff; font-weight: 700; font-size: 0.75rem;
+  flex-shrink: 0;
 }
 .nav-user-name {
   font-size: 0.8rem; color: var(--text2); font-weight: 600;
@@ -1139,6 +1141,7 @@ body.auth-active { overflow: hidden; }
 .nav-signout-btn {
   border: none; background: transparent; color: var(--text3);
   font-size: 0.78rem; cursor: pointer; padding: 4px 8px;
+  white-space: nowrap; flex-shrink: 0; line-height: 1.2;
 }
 .nav-signout-btn:hover { color: var(--accent); }
 
@@ -2048,7 +2051,7 @@ const T = {
     lockInstagram:'📸 إنستغرام — llilmyra',
     lockEmail:'📧 البريد — lazragamira1@gmail.com',
     lockLogout:'⬡ تسجيل الخروج أو تبديل الحساب',
-    signOut:'تسجيل الخروج', signOutConfirm:'هل تريد تسجيل الخروج من حسابك؟',
+    signOut:'خروج', signOutConfirm:'هل تريد تسجيل الخروج من حسابك؟',
     lockChecking:'⏳ جارٍ التحقق من حالة الاشتراك...',
     phTitle:'ما الذي تطبخه؟',phPrep:'مثلاً: 15 دقيقة',phCook:'مثلاً: 30 دقيقة',
     phServings:'مثلاً: 4 أشخاص',phTags:'نباتي، سريع...',
