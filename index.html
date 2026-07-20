@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Recipe Notebook</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --font-display: 'Playfair Display', serif;
-  --font-body: 'Lato', sans-serif;
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
   --font-arabic: 'Amiri', serif;
   --radius: 18px;
   --radius-sm: 10px;
@@ -20,16 +20,16 @@
 /* ════════════ THEMES ════════════ */
 /* WARM CREAM */
 [data-theme="warm"][data-mode="light"] {
-  --bg:#FDF6EE;--surface:#FFF8F0;--card:#FFFFFF;
-  --accent:#C2703A;--accent2:#E8956A;--accent-light:#FDEBD8;
-  --text:#2C1A0E;--text2:#6B4226;--text3:#A07050;
-  --border:#E8D5C0;--nav:#FAF0E4;--glow:rgba(194,112,58,0.15);
+  --bg:#FAF6EE;--surface:#FFFCF6;--card:#FFFFFF;
+  --accent:#9A3324;--accent2:#C68B3C;--accent-light:#F3E3D3;
+  --text:#231913;--text2:#6B5D4F;--text3:#9A8B7A;
+  --border:#E8DFD0;--nav:#FAF6EE;--glow:rgba(154,51,36,0.13);
 }
 [data-theme="warm"][data-mode="dark"] {
-  --bg:#1A0F07;--surface:#231408;--card:#2E1A0C;
-  --accent:#E8956A;--accent2:#C2703A;--accent-light:#3D2010;
-  --text:#F5E6D3;--text2:#C8A882;--text3:#8A6A4A;
-  --border:#3D2510;--nav:#1F1208;--glow:rgba(232,149,106,0.12);
+  --bg:#1C140F;--surface:#241A13;--card:#2C2018;
+  --accent:#D97D5C;--accent2:#C68B3C;--accent-light:#3A2618;
+  --text:#F2E8DC;--text2:#C4B29C;--text3:#8A7862;
+  --border:#3A2C1E;--nav:#18110C;--glow:rgba(217,125,92,0.12);
 }
 /* SAGE GARDEN */
 [data-theme="sage"][data-mode="light"] {
@@ -241,17 +241,16 @@ nav {
 .nav-brand:hover { opacity: 0.8; }
 .nav-brand-icon {
   width: 38px; height: 38px;
-  background: var(--accent-light);
-  border-radius: 10px;
+  background: var(--accent);
+  border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem;
-  border: 1px solid var(--border);
   transition: all var(--transition);
   flex-shrink: 0;
 }
-.nav-brand:hover .nav-brand-icon { background: var(--accent); }
+.nav-brand-icon svg { width: 20px; height: 20px; }
+.nav-brand:hover .nav-brand-icon { transform: rotate(-6deg) scale(1.04); }
 .nav-brand-text { line-height: 1.2; }
-.nav-brand-sub { font-size: 0.58rem; font-family: var(--font-body); color: var(--text3); font-weight: 500; letter-spacing: 0.1em; }
+.nav-brand-sub { font-size: 0.58rem; font-family: var(--font-body); color: var(--text3); font-weight: 600; letter-spacing: 0.16em; }
 .nav-actions { display: flex; align-items: center; gap: 8px; }
 
 /* ════════════ BUTTONS ════════════ */
@@ -283,7 +282,7 @@ nav {
   display: flex; align-items: center; justify-content: center;
   transition: all var(--transition);
 }
-.btn-icon:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); transform: rotate(20deg); }
+.btn-icon:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
 
 /* ════════════ PAGES ════════════ */
 .page {
@@ -434,12 +433,20 @@ nav {
 }
 .chip.active, .chip:hover { background: var(--accent); border-color: var(--accent); color: #fff; transform: translateY(-1px); }
 .recipes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@keyframes cardIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 .recipe-card {
   background: var(--card); border: 1px solid var(--border);
   border-radius: var(--radius); overflow: hidden; cursor: pointer;
   transition: all var(--transition);
   box-shadow: var(--shadow);
+  animation: cardIn 0.35s cubic-bezier(0.34,1.2,0.64,1) both;
 }
+.recipe-card:nth-child(1) { animation-delay: 0.02s; }
+.recipe-card:nth-child(2) { animation-delay: 0.06s; }
+.recipe-card:nth-child(3) { animation-delay: 0.10s; }
+.recipe-card:nth-child(4) { animation-delay: 0.14s; }
+.recipe-card:nth-child(5) { animation-delay: 0.18s; }
+.recipe-card:nth-child(6) { animation-delay: 0.22s; }
 .recipe-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow-lg), 0 0 20px var(--glow); }
 .recipe-card-img {
   height: 130px; background: var(--accent-light);
@@ -629,7 +636,39 @@ body[data-lang="ar"] .tips-box { border-left: none; border-right: 3px solid var(
 }
 .share-copy-btn:hover { background: var(--accent); color: #fff; }
 
-/* ── Share modal ── */
+/* ── Confirm dialog (site-themed, replaces browser confirm()) ── */
+.confirm-overlay {
+  position: fixed; inset: 0; background: rgba(20,14,8,0.5);
+  z-index: 400; display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  padding: 1rem; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+}
+.confirm-overlay.show { opacity: 1; pointer-events: all; }
+.confirm-box {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 1.6rem; width: 100%; max-width: 340px;
+  transform: scale(0.94) translateY(8px); transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25); text-align: center;
+}
+.confirm-overlay.show .confirm-box { transform: scale(1) translateY(0); }
+.confirm-icon {
+  width: 52px; height: 52px; border-radius: 50%; margin: 0 auto 0.9rem;
+  display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+  background: var(--accent-light); color: var(--accent);
+}
+.confirm-icon.danger { background: #FBE2DC; color: #B23A2E; }
+[data-mode="dark"] .confirm-icon.danger { background: #3D1A14; color: #E88070; }
+.confirm-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.confirm-msg { font-size: 0.88rem; color: var(--text2); line-height: 1.5; margin-bottom: 1.4rem; }
+.confirm-btns { display: flex; gap: 8px; }
+.confirm-btn {
+  flex: 1; padding: 11px; border-radius: 14px; font-family: var(--font-body);
+  font-size: 0.86rem; font-weight: 700; cursor: pointer; transition: all var(--transition);
+  border: 1.5px solid var(--border); background: var(--surface); color: var(--text2);
+}
+.confirm-btn:hover { background: var(--accent-light); }
+.confirm-btn.danger { background: #C23B2C; border-color: #C23B2C; color: #fff; }
+.confirm-btn.danger:hover { background: #A32D20; border-color: #A32D20; }
 .share-modal-overlay {
   position: fixed; inset: 0; background: rgba(20,14,8,0.5);
   z-index: 250; display: flex; align-items: flex-end; justify-content: center;
@@ -812,6 +851,23 @@ body[data-lang="ar"] .tips-box { border-left: none; border-right: 3px solid var(
 .lang-native { font-weight: 700; display: block; font-size: 1rem; }
 
 /* ════════════ TOAST ════════════ */
+/* ── Everyday delight: small, satisfying feedback on common actions ── */
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.35) rotate(-8deg); }
+  60% { transform: scale(0.92) rotate(4deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.heart-pop { animation: heartPop 0.45s cubic-bezier(0.34,1.56,0.64,1); }
+
+@keyframes saveBounce {
+  0% { transform: translateX(-50%) translateY(100px); }
+  60% { transform: translateX(-50%) translateY(-6px); }
+  80% { transform: translateX(-50%) translateY(2px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+.toast.show.bounce-in { animation: saveBounce 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+
 .toast {
   position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(100px);
   background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -1369,7 +1425,7 @@ body.auth-active { overflow: hidden; }
     <div class="settings-label" id="lbl-colorTheme">COLOR THEME</div>
     <div class="theme-grid">
       <div class="theme-option active" onclick="setTheme('warm')" data-theme="warm">
-        <div class="theme-dot" style="background:linear-gradient(135deg,#C2703A,#E8956A);"></div>
+        <div class="theme-dot" style="background:linear-gradient(135deg,#9A3324,#C68B3C);"></div>
         <span id="th-warm">Warm Cream</span>
       </div>
       <div class="theme-option" onclick="setTheme('sage')" data-theme="sage">
@@ -1478,7 +1534,7 @@ body.auth-active { overflow: hidden; }
 <!-- NAV -->
 <nav>
   <div class="nav-brand" onclick="showPage('home')">
-    <div class="nav-brand-icon">📖</div>
+    <div class="nav-brand-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 2v7.5a2 2 0 0 0 2 2v0a2 2 0 0 0 2-2V2M7 2v20M11 2v6M17 2c-1.5 1.5-2 3.5-2 6s.5 4.5 2 6M17 2v18" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <div class="nav-brand-text">
       <div id="nav-brand-title">Recipe Book</div>
       <div class="nav-brand-sub" id="nav-brand-sub">COOK WITH LOVE</div>
@@ -1728,6 +1784,18 @@ body.auth-active { overflow: hidden; }
 </div>
 
 <!-- SHARE MODAL -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <div class="confirm-icon" id="confirmIcon">❓</div>
+    <div class="confirm-title" id="confirmTitle">Are you sure?</div>
+    <div class="confirm-msg" id="confirmMsg"></div>
+    <div class="confirm-btns">
+      <button class="confirm-btn" id="confirmCancelBtn" onclick="_closeConfirm(false)">Cancel</button>
+      <button class="confirm-btn danger" id="confirmOkBtn" onclick="_closeConfirm(true)">Delete</button>
+    </div>
+  </div>
+</div>
+
 <div class="share-modal-overlay" id="shareModal" onclick="closeShareModal(event)">
   <div class="share-modal">
     <div class="share-modal-title">
@@ -1803,7 +1871,10 @@ const T = {
     description:'DESCRIPTION',ingredients:'INGREDIENTS',method:'METHOD',
     tips:'TIPS & NOTES',cancel:'Cancel',saveRecipe:'💾 Save Recipe',
     hintIngredients:'One per line (e.g. "2 cups flour")',hintMethod:'One step per line',
-    back:'Back',edit:'Edit',delete:'Delete',deleteConfirm:'Delete this recipe?',
+    back:'Back',edit:'Edit',delete:'Delete',deleteConfirm:'This recipe will be gone for good.',
+    deleteRecipeTitle:'Delete this recipe?',deleteBtnLabel:'Delete',cancelBtnLabel:'Keep it',
+    deleteCollectionTitle:'Delete this collection?',deleteCollectionMsg:'Recipes inside it will stay in your notebook — only the collection itself is removed.',
+    saveFailed:'⚠️ Could not save — storage may be full',
     recipeSaved:'✓ Recipe saved!',recipeDeleted:'✓ Recipe deleted',
     recipes:'Recipes',new:'New',
     customize:'✦ Customize Notebook',colorTheme:'COLOR THEME',
@@ -1861,7 +1932,10 @@ const T = {
     description:'DESCRIPTION',ingredients:'INGRÉDIENTS',method:'MÉTHODE',
     tips:'CONSEILS',cancel:'Annuler',saveRecipe:'💾 Sauvegarder',
     hintIngredients:'Un par ligne',hintMethod:'Une étape par ligne',
-    back:'Retour',edit:'Modifier',delete:'Supprimer',deleteConfirm:'Supprimer cette recette?',
+    back:'Retour',edit:'Modifier',delete:'Supprimer',deleteConfirm:'Cette recette sera perdue définitivement.',
+    deleteRecipeTitle:'Supprimer cette recette ?',deleteBtnLabel:'Supprimer',cancelBtnLabel:'Garder',
+    deleteCollectionTitle:'Supprimer cette collection ?',deleteCollectionMsg:'Les recettes qu\u2019elle contient resteront dans votre carnet — seule la collection est supprimée.',
+    saveFailed:'⚠️ Impossible d\u2019enregistrer — stockage plein ?',
     recipeSaved:'✓ Recette sauvegardée!',recipeDeleted:'✓ Recette supprimée',
     recipes:'Recettes',new:'Nouveau',
     customize:'✦ Personnaliser',colorTheme:'THÈME DE COULEUR',
@@ -1918,7 +1992,10 @@ const T = {
     description:'الوصف',ingredients:'المكونات',method:'طريقة التحضير',
     tips:'نصائح وملاحظات',cancel:'إلغاء',saveRecipe:'💾 حفظ الوصفة',
     hintIngredients:'مكون في كل سطر',hintMethod:'خطوة في كل سطر',
-    back:'رجوع',edit:'تعديل',delete:'حذف',deleteConfirm:'هل تريد حذف هذه الوصفة؟',
+    back:'رجوع',edit:'تعديل',delete:'حذف',deleteConfirm:'ستفقد هذه الوصفة نهائياً ولن تتمكني من استرجاعها.',
+    deleteRecipeTitle:'حذف هذه الوصفة؟',deleteBtnLabel:'حذف',cancelBtnLabel:'إبقاء',
+    deleteCollectionTitle:'حذف هذه المجموعة؟',deleteCollectionMsg:'ستبقى الوصفات داخلها في دفترك — سيُحذف اسم المجموعة فقط.',
+    saveFailed:'⚠️ تعذّر الحفظ — قد تكون مساحة التخزين ممتلئة',
     recipeSaved:'✓ تم حفظ الوصفة!',recipeDeleted:'✓ تم حذف الوصفة',
     recipes:'الوصفات',new:'جديد',
     customize:'✦ تخصيص الدفتر',colorTheme:'لون السمة',
@@ -2360,6 +2437,22 @@ function handlePhoto(e) {
   reader.readAsDataURL(file);
 }
 
+// Wraps localStorage.setItem('recipes', ...) with error handling.
+// localStorage can fail silently — full quota, private/incognito mode,
+// or the browser blocking storage entirely — and without this guard the
+// UI would still show "Saved!" while nothing was actually written.
+// Returns true only if the write actually succeeded.
+function _persistRecipes() {
+  try {
+    localStorage.setItem('recipes', JSON.stringify(recipes));
+    scheduleFirestoreSave();
+    return true;
+  } catch (err) {
+    console.error('Failed to save recipes to localStorage:', err);
+    return false;
+  }
+}
+
 function saveRecipe() {
   const title = document.getElementById('f-title').value.trim();
   if (!title) { showToast('⚠️ Please enter a title'); return; }
@@ -2378,12 +2471,19 @@ function saveRecipe() {
     tips: document.getElementById('f-tips').value,
     date: new Date().toLocaleDateString(),
   };
+  // Snapshot in case the write fails and we need to roll back the
+  // in-memory array so the UI doesn't drift from what's actually saved.
+  const previousRecipes = recipes.slice();
   if (editingId) {
     const idx = recipes.findIndex(r => r.id === editingId);
     if (idx > -1) recipes[idx] = recipe;
   } else { recipes.push(recipe); }
-  localStorage.setItem('recipes', JSON.stringify(recipes));
-  scheduleFirestoreSave();
+  const saved = _persistRecipes();
+  if (!saved) {
+    recipes = previousRecipes;
+    showToast((T[currentLang] || T.en).saveFailed || '⚠️ Could not save — storage may be full');
+    return;
+  }
   editingId = null; photoData = null;
   updateStats();
   showToast((T[currentLang] || T.en).recipeSaved);
@@ -2457,7 +2557,7 @@ function renderList() {
     const rTags = (r.tags||'').split(',').map(x=>x.trim()).filter(Boolean);
     return `
     <div class="recipe-card" onclick="viewRecipe(${r.id})" style="position:relative;">
-      <button onclick="event.stopPropagation();toggleFavorite(${r.id})" style="position:absolute;top:8px;right:8px;z-index:2;background:rgba(255,255,255,0.85);border:none;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer;">${r.favorite ? '❤️' : '🤍'}</button>
+      <button onclick="event.stopPropagation();toggleFavorite(${r.id},event)" style="position:absolute;top:8px;right:8px;z-index:2;background:rgba(255,255,255,0.85);border:none;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer;">${r.favorite ? '❤️' : '🤍'}</button>
       <div class="recipe-card-img">
         ${r.photo ? `<img src="${r.photo}" alt="${r.title}"/>` : (CATEGORY_EMOJI[r.category] || '🍴')}
       </div>
@@ -2477,12 +2577,15 @@ function setFilter(cat) { currentFilter = cat; renderList(); }
 function toggleFavoritesFilter() { showFavoritesOnly = !showFavoritesOnly; renderList(); }
 function filterByTag(tag) { currentTagFilter = tag; currentCollectionFilter = null; showPage('list'); renderList(); }
 function clearExtraFilters() { currentTagFilter = null; currentCollectionFilter = null; renderList(); }
-function toggleFavorite(id) {
+function toggleFavorite(id, evt) {
   const r = recipes.find(x => x.id === id);
   if (!r) return;
   r.favorite = !r.favorite;
-  localStorage.setItem('recipes', JSON.stringify(recipes));
-  scheduleFirestoreSave();
+  if (!_persistRecipes()) { r.favorite = !r.favorite; showToast((T[currentLang] || T.en).saveFailed || '⚠️ Could not save — storage may be full'); return; }
+  if (r.favorite && evt && evt.target) {
+    const btn = evt.target.closest('button');
+    if (btn) { btn.classList.remove('heart-pop'); void btn.offsetWidth; btn.classList.add('heart-pop'); }
+  }
   renderList();
   if (viewingId === id) renderView(id);
 }
@@ -2516,7 +2619,7 @@ function renderView(id) {
         </div>
         ${r.tags ? `<div class="meta-chips">${r.tags.split(',').map(tg=>tg.trim()).filter(Boolean).map(tg=>`<div class="tag-pill" onclick="filterByTag('${tg.replace(/'/g,"\\'")}')" style="cursor:pointer;">#${tg}</div>`).join('')}</div>` : ''}
         <div class="meta-chips" style="margin-top:8px;">
-          <button class="btn" onclick="toggleFavorite(${r.id})">${r.favorite ? '❤️ Favorited' : '🤍 Favorite'}</button>
+          <button class="btn" onclick="toggleFavorite(${r.id},event)">${r.favorite ? '❤️ Favorited' : '🤍 Favorite'}</button>
           <button class="btn" onclick="openCollectionPicker(${r.id})">🗂️ Add to Collection</button>
         </div>
       </div>
@@ -2553,14 +2656,20 @@ function editCurrentRecipe() {
   showPage('form');
 }
 
-function deleteCurrentRecipe() {
+async function deleteCurrentRecipe() {
   const t = T[currentLang] || T.en;
-  if (!confirm(t.deleteConfirm)) return;
+  const ok = await showConfirm({
+    title: t.deleteRecipeTitle || 'Delete this recipe?',
+    message: t.deleteConfirm,
+    okLabel: t.deleteBtnLabel || 'Delete',
+    cancelLabel: t.cancelBtnLabel || 'Cancel',
+    danger: true,
+  });
+  if (!ok) return;
   recipes = recipes.filter(r => r.id !== viewingId);
-  localStorage.setItem('recipes', JSON.stringify(recipes));
-  scheduleFirestoreSave();
+  const saved = _persistRecipes();
   updateStats();
-  showToast(t.recipeDeleted);
+  showToast(saved ? t.recipeDeleted : (t.saveFailed || '⚠️ Could not save — storage may be full'));
   showPage('list');
 }
 
@@ -2589,12 +2698,17 @@ function importAllRecipes(event) {
   const file = event.target.files[0];
   if (!file) return;
   const reader = new FileReader();
-  reader.onload = (e) => {
+  reader.onload = async (e) => {
     try {
       const data = JSON.parse(e.target.result);
       const importedRecipes = Array.isArray(data.recipes) ? data.recipes : (Array.isArray(data) ? data : null);
       if (!importedRecipes) { showToast('⚠️ Invalid backup file'); return; }
-      const mode = confirm('Click OK to MERGE with your current recipes, or Cancel to REPLACE everything with this backup.');
+      const mode = await showConfirm({
+        title: 'Restore backup',
+        message: 'Merge this backup with your current recipes, or replace everything with it?',
+        okLabel: 'Merge', cancelLabel: 'Replace all',
+        danger: false,
+      });
       if (mode) {
         const existingIds = new Set(recipes.map(r => r.id));
         importedRecipes.forEach(r => { if (!existingIds.has(r.id)) recipes.push(r); });
@@ -2606,12 +2720,11 @@ function importAllRecipes(event) {
         recipes = importedRecipes;
         if (Array.isArray(data.collections)) collections = data.collections;
       }
-      localStorage.setItem('recipes', JSON.stringify(recipes));
+      const saved = _persistRecipes();
       saveCollections();
-      scheduleFirestoreSave();
       updateStats();
       renderList();
-      showToast('✅ Backup restored');
+      showToast(saved ? '✅ Backup restored' : '⚠️ Could not save — storage may be full');
     } catch (err) {
       showToast('⚠️ Could not read this file');
     }
@@ -2631,8 +2744,17 @@ function createCollection() {
   saveCollections();
   renderCollections();
 }
-function deleteCollection(id) {
-  if (!confirm('Delete this collection?')) return;
+async function deleteCollection(id) {
+  const t = T[currentLang] || T.en;
+  const col = collections.find(c => c.id === id);
+  const ok = await showConfirm({
+    title: t.deleteCollectionTitle || 'Delete this collection?',
+    message: (t.deleteCollectionMsg || 'Recipes inside it will stay in your notebook — only the collection itself is removed.') + (col ? ' "' + col.name + '"' : ''),
+    okLabel: t.deleteBtnLabel || 'Delete',
+    cancelLabel: t.cancelBtnLabel || 'Cancel',
+    danger: true,
+  });
+  if (!ok) return;
   collections = collections.filter(c => c.id !== id);
   saveCollections();
   if (currentCollectionFilter === id) currentCollectionFilter = null;
@@ -2661,9 +2783,15 @@ function renderCollections() {
     </div>
   `).join('');
 }
-function openCollectionPicker(recipeId) {
+async function openCollectionPicker(recipeId) {
   if (!collections.length) {
-    if (confirm('You have no collections yet. Create one now?')) {
+    const ok = await showConfirm({
+      title: 'No collections yet',
+      message: 'Create your first collection now?',
+      okLabel: 'Create', cancelLabel: 'Not now',
+      danger: false,
+    });
+    if (ok) {
       createCollection();
       if (!collections.length) return;
     } else return;
@@ -2689,9 +2817,38 @@ function openCollectionPicker(recipeId) {
 // ══════════════════════════════════════════════
 function showToast(msg) {
   const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2400);
+  el.textContent = msg;
+  el.classList.remove('bounce-in'); void el.offsetWidth;
+  el.classList.add('show', 'bounce-in');
+  setTimeout(() => el.classList.remove('show', 'bounce-in'), 2400);
 }
+
+// Site-themed confirm dialog — replaces the browser's native confirm()
+// so destructive actions (delete recipe, delete collection, sign out)
+// match the site's look instead of popping a plain OS-styled box.
+let _confirmResolve = null;
+function showConfirm(opts) {
+  // opts: { title, message, okLabel, cancelLabel, danger }
+  const icon = document.getElementById('confirmIcon');
+  const iconEl = icon;
+  iconEl.textContent = opts.danger === false ? '❓' : '🗑️';
+  iconEl.classList.toggle('danger', opts.danger !== false);
+  document.getElementById('confirmTitle').textContent = opts.title || 'Are you sure?';
+  document.getElementById('confirmMsg').textContent = opts.message || '';
+  const okBtn = document.getElementById('confirmOkBtn');
+  okBtn.textContent = opts.okLabel || 'Delete';
+  okBtn.classList.toggle('danger', opts.danger !== false);
+  document.getElementById('confirmCancelBtn').textContent = opts.cancelLabel || 'Cancel';
+  document.getElementById('confirmOverlay').classList.add('show');
+  return new Promise((resolve) => { _confirmResolve = resolve; });
+}
+function _closeConfirm(result) {
+  document.getElementById('confirmOverlay').classList.remove('show');
+  if (_confirmResolve) { _confirmResolve(result); _confirmResolve = null; }
+}
+document.getElementById('confirmOverlay').addEventListener('click', function(e) {
+  if (e.target === this) _closeConfirm(false);
+});
 
 // ══════════════════════════════════════════════
 // CLOSE MODAL ON OUTSIDE CLICK
@@ -2743,7 +2900,7 @@ async function _loadFromFirestore(user) {
       const data = snap.data();
       if (Array.isArray(data.recipes)) {
         recipes = data.recipes;
-        localStorage.setItem('recipes', JSON.stringify(recipes));
+        _persistRecipes();
         updateStats();
         if (document.getElementById('page-list').classList.contains('active')) renderList();
         if (viewingId) renderView(viewingId);
@@ -2796,8 +2953,14 @@ function doSignInWithGoogle() {
     });
 }
 
-function doSignOut() {
-  if (!confirm('Sign out of your account?')) return;
+async function doSignOut() {
+  const ok = await showConfirm({
+    title: 'Sign out?',
+    message: "You'll need to sign in again to see your recipes on this device.",
+    okLabel: 'Sign out', cancelLabel: 'Stay signed in',
+    danger: true,
+  });
+  if (!ok) return;
 
   clearTimeout(_saveDebounceTimer);
   if (_firestoreUnsubscribe) { _firestoreUnsubscribe(); _firestoreUnsubscribe = null; }
@@ -3451,8 +3614,8 @@ function _confirmImport() {
   window._importRecipe = null;
   document.getElementById('importOverlay')?.remove();
   recipes.push(r);
-  localStorage.setItem('recipes', JSON.stringify(recipes));
-  scheduleFirestoreSave();
+  const saved = _persistRecipes();
+  if (!saved) { recipes.pop(); showToast((T[currentLang] || T.en).saveFailed || '⚠️ Could not save — storage may be full'); return; }
   updateStats();
   showToast('✓ ' + r.title);
   viewRecipe(r.id);
