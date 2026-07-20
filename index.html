@@ -224,12 +224,11 @@ nav {
   border-bottom: 1px solid var(--border);
   padding: 0 1.5rem;
   display: flex; align-items: center; justify-content: space-between;
-  height: 66px;
+  height: 62px;
   position: sticky; top: 0; z-index: 100;
   transition: background var(--transition), border-color var(--transition);
-  backdrop-filter: blur(24px) saturate(1.8);
-  -webkit-backdrop-filter: blur(24px) saturate(1.8);
-  box-shadow: 0 1px 0 var(--border), 0 4px 28px rgba(0,0,0,0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .nav-brand {
@@ -257,15 +256,12 @@ nav {
 
 /* ════════════ BUTTONS ════════════ */
 .btn {
-  padding: 9px 18px; border-radius: var(--radius-sm);
+  padding: 8px 16px; border-radius: var(--radius-sm);
   border: 1.5px solid var(--accent); background: transparent;
   color: var(--accent); font-family: var(--font-body);
   font-size: 0.84rem; font-weight: 700; cursor: pointer;
   transition: all var(--transition); white-space: nowrap;
   position: relative; overflow: hidden;
-  letter-spacing: 0.01em;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
 }
 .btn::before {
   content: '';
@@ -275,26 +271,19 @@ nav {
   transition: transform var(--transition);
   z-index: -1;
 }
-.btn:hover { color: #fff; box-shadow: 0 4px 16px var(--glow); }
+.btn:hover { color: #fff; }
 .btn:hover::before { transform: scaleX(1); }
-.btn:active { transform: scale(0.96); }
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; border-color: transparent;
-  box-shadow: 0 3px 14px var(--glow);
-}
-.btn-primary::before { background: linear-gradient(135deg, var(--accent2), var(--accent)); }
-.btn-primary:hover { border-color: transparent; box-shadow: 0 6px 22px var(--glow); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary::before { background: var(--accent2); }
+.btn-primary:hover { border-color: var(--accent2); }
 .btn-icon {
   width: 36px; height: 36px; border-radius: 50%;
   border: 1.5px solid var(--border); background: var(--surface);
   color: var(--text2); font-size: 1rem; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: all var(--transition);
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
 }
-.btn-icon:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); transform: scale(1.1); }
+.btn-icon:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); transform: rotate(20deg); }
 
 /* ════════════ PAGES ════════════ */
 .page {
@@ -642,69 +631,64 @@ body[data-lang="ar"] .tips-box { border-left: none; border-right: 3px solid var(
 
 /* ── Share modal ── */
 .share-modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  position: fixed; inset: 0; background: rgba(20,14,8,0.5);
   z-index: 250; display: flex; align-items: flex-end; justify-content: center;
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  padding: 1rem;
   opacity: 0; pointer-events: none; transition: opacity var(--transition);
 }
 .share-modal-overlay.show { opacity: 1; pointer-events: all; }
 .share-modal {
   background: var(--card); border: 1px solid var(--border);
-  border-radius: 28px 28px 0 0; padding: 1rem 1.5rem 2rem; width: 100%; max-width: 500px;
-  transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
-  box-shadow: 0 -16px 60px rgba(0,0,0,0.25);
+  border-radius: 26px 26px 18px 18px; padding: 1.6rem 1.5rem 1.75rem; width: 100%; max-width: 460px;
+  transform: translateY(60px); transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 -12px 48px rgba(0,0,0,0.24);
+}
+@media (min-width: 640px) {
+  .share-modal-overlay { align-items: center; }
+  .share-modal { transform: translateY(24px) scale(0.97); border-radius: 22px; }
+  .share-modal-overlay.show .share-modal { transform: translateY(0) scale(1); }
 }
 .share-modal-overlay.show .share-modal { transform: translateY(0); }
+.share-modal::before {
+  content: ''; display: block; width: 40px; height: 4px; border-radius: 3px;
+  background: var(--border); margin: -6px auto 14px;
+}
+@media (min-width: 640px) { .share-modal::before { display: none; } }
 .share-modal-title {
-  font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--text);
-  margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; color: var(--text);
+  margin-bottom: 1.15rem; display: flex; align-items: center; justify-content: space-between;
 }
+.share-modal-title-text { display: flex; align-items: center; gap: 8px; }
+.share-close-btn {
+  width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; border: 1px solid var(--border); background: var(--surface);
+  color: var(--text3); font-size: 0.8rem; cursor: pointer; transition: all var(--transition); flex-shrink: 0;
+}
+.share-close-btn:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
 .share-section-label {
-  font-size: 0.6rem; letter-spacing: 0.14em; font-weight: 800;
-  color: var(--text3); text-transform: uppercase; margin: 1.1rem 0 0.65rem;
-  display: flex; align-items: center; gap: 8px;
+  font-size: 0.68rem; letter-spacing: 0.1em; font-weight: 700;
+  color: var(--text3); text-transform: uppercase; margin: 1.15rem 0 0.65rem;
 }
-.share-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-.share-btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.share-section-label:first-of-type { margin-top: 0; }
+.share-btn-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); gap: 9px; }
 .share-action-btn {
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  padding: 16px 12px 14px; border-radius: 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 14px 8px 11px; border-radius: 16px;
   border: 1.5px solid var(--border); background: var(--surface);
-  color: var(--text2); font-family: var(--font-body); font-size: 0.78rem; font-weight: 700;
-  cursor: pointer; transition: all 0.25s cubic-bezier(0.4,0,0.2,1); flex: 1; min-width: 72px;
-  justify-content: center; position: relative; overflow: hidden;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  color: var(--text2); font-family: var(--font-body); font-size: 0.72rem; font-weight: 600;
+  cursor: pointer; transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+  text-align: center; line-height: 1.25;
 }
-.share-action-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
-.share-action-btn:active { transform: scale(0.94) translateY(0); box-shadow: none; }
-.share-btn-icon-wrap {
-  width: 46px; height: 46px; border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4rem; transition: all 0.25s ease;
-  background: var(--accent-light); color: var(--accent);
-  box-shadow: 0 2px 8px var(--glow);
+.share-action-btn:hover {
+  border-color: var(--accent); color: var(--accent); background: var(--accent-light);
+  transform: translateY(-2px); box-shadow: 0 6px 16px -6px rgba(0,0,0,0.18);
 }
-.share-btn-icon-wrap svg { color: inherit; }
-
-.share-action-copy { border-color: var(--border); }
-.share-action-copy:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-.share-action-copy:hover .share-btn-icon-wrap { background: var(--accent); color: #fff; box-shadow: 0 4px 14px var(--glow); }
-
-.share-action-whatsapp .share-btn-icon-wrap { background: #e4f8ed; color: #25D366; box-shadow: 0 2px 8px rgba(37,211,102,0.2); }
-.share-action-whatsapp { border-color: #b8e8c8; color: #128C7E; }
-.share-action-whatsapp:hover { background: #e4f8ed; border-color: #25D366; }
-.share-action-whatsapp:hover .share-btn-icon-wrap { background: #25D366; color: #fff; box-shadow: 0 4px 14px rgba(37,211,102,0.35); }
-
-.share-action-more .share-btn-icon-wrap { background: var(--accent-light); color: var(--accent); }
-.share-action-more:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-.share-action-more:hover .share-btn-icon-wrap { background: var(--accent); color: #fff; }
-
-.share-action-link .share-btn-icon-wrap { background: #e6efff; color: #2563eb; box-shadow: 0 2px 8px rgba(37,99,235,0.18); }
-.share-action-link { border-color: #c0d4ff; color: #2563eb; }
-.share-action-link:hover { background: #e6efff; border-color: #2563eb; }
-.share-action-link:hover .share-btn-icon-wrap { background: #2563eb; color: #fff; box-shadow: 0 4px 14px rgba(37,99,235,0.3); }
+.share-action-btn:active { transform: translateY(0); }
+.share-action-btn .share-icon {
+  font-size: 1.35rem; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--accent-light); flex-shrink: 0;
+}
 
 /* ── Floating back button (form page) ── */
 .form-back-btn {
@@ -829,13 +813,12 @@ body[data-lang="ar"] .tips-box { border-left: none; border-right: 3px solid var(
 
 /* ════════════ TOAST ════════════ */
 .toast {
-  position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(120px);
+  position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(100px);
   background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; padding: 12px 26px;
+  color: #fff; padding: 11px 22px;
   border-radius: 50px; font-size: 0.85rem; font-weight: 700;
-  z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
-  white-space: nowrap; box-shadow: 0 8px 30px var(--glow), 0 2px 8px rgba(0,0,0,0.12);
-  letter-spacing: 0.02em;
+  z-index: 300; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  white-space: nowrap; box-shadow: 0 8px 30px var(--glow);
 }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
@@ -975,73 +958,37 @@ body { font-size: var(--fs-base, 0.9rem); }
   padding: 20px;
   overflow-y: auto; overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  background-image: radial-gradient(ellipse at 50% 0%, var(--glow) 0%, transparent 70%);
 }
 #authOverlay.hidden { display: none; }
 body.auth-active { overflow: hidden; }
 .auth-card {
   background: var(--card); border: 1px solid var(--border);
-  border-radius: 28px; box-shadow: 0 20px 70px rgba(0,0,0,0.15);
-  max-width: 420px; width: 100%; padding: 52px 40px 40px;
+  border-radius: var(--radius); box-shadow: var(--shadow-lg);
+  max-width: 380px; width: 100%; padding: 40px 32px;
   text-align: center; position: relative;
   margin: auto;
-  /* subtle glow ring */
-  outline: 1px solid transparent;
-  background-clip: padding-box;
 }
-.auth-card::before {
-  content: '';
-  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-  width: 55%; height: 3px;
-  background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
-  border-radius: 0 0 4px 4px;
-}
-.auth-card::after {
-  content: '';
-  position: absolute; inset: 0; border-radius: 28px;
-  background: radial-gradient(ellipse at 50% 0%, var(--glow) 0%, transparent 65%);
-  pointer-events: none; z-index: 0;
-}
-.auth-card > * { position: relative; z-index: 1; }
-.auth-card .auth-icon {
-  font-size: 2.6rem; margin-bottom: 20px;
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 80px; height: 80px;
-  background: linear-gradient(135deg, var(--accent-light), var(--surface));
-  border-radius: 24px;
-  border: 1.5px solid var(--border);
-  box-shadow: 0 8px 24px var(--glow);
-}
+.auth-card .auth-icon { font-size: 2.6rem; margin-bottom: 12px; }
 .auth-card h2 {
-  font-family: var(--font-display); font-size: 1.6rem;
-  color: var(--text); margin-bottom: 10px; font-weight: 700;
-  letter-spacing: -0.02em; line-height: 1.25;
+  font-family: var(--font-display); font-size: 1.4rem;
+  color: var(--text); margin-bottom: 8px;
 }
-.auth-card p { color: var(--text2); font-size: 0.9rem; margin-bottom: 32px; line-height: 1.65; }
+.auth-card p { color: var(--text2); font-size: 0.9rem; margin-bottom: 26px; line-height: 1.5; }
 .google-btn {
-  display: flex; align-items: center; justify-content: center; gap: 12px;
-  width: 100%; padding: 15px 20px; border-radius: 14px;
-  border: 1.5px solid var(--border); background: var(--surface);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 13px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--surface);
   color: var(--text); font-family: var(--font-body); font-size: 0.95rem;
-  font-weight: 700; cursor: pointer; transition: all 0.25s ease;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
+  font-weight: 700; cursor: pointer; transition: var(--transition);
 }
-.google-btn:hover { box-shadow: 0 6px 24px var(--glow), 0 2px 8px rgba(0,0,0,0.08); transform: translateY(-2px); border-color: var(--accent); }
-.google-btn:active { transform: scale(0.98) translateY(0); box-shadow: none; }
-.google-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+.google-btn:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+.google-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 .auth-error {
-  display: none; margin-top: 14px; padding: 11px 14px;
-  border-radius: 12px; background: rgba(200,40,40,0.09);
-  color: #C0302A; font-size: 0.83rem; border: 1px solid rgba(200,40,40,0.2);
-  text-align: start;
+  display: none; margin-top: 14px; padding: 10px 12px;
+  border-radius: var(--radius-sm); background: rgba(200,40,40,0.1);
+  color: #C0302A; font-size: 0.82rem; text-align: left;
 }
-.auth-note {
-  margin-top: 22px; font-size: 0.72rem; color: var(--text3);
-  display: flex; align-items: center; justify-content: center; gap: 5px;
-}
-.auth-note::before { content: '🔒'; font-size: 0.8rem; }
+.auth-note { margin-top: 18px; font-size: 0.75rem; color: var(--text3); }
 
 /* ===== ACCESS LOCK OVERLAY (shown when account is not an active subscriber) ===== */
 #accessLockOverlay {
@@ -1056,9 +1003,9 @@ body.auth-active { overflow: hidden; }
 #accessLockOverlay.visible { display: flex !important; }
 .lock-card {
   background: var(--card); border: 1px solid var(--border);
-  border-radius: 28px; box-shadow: 0 20px 70px rgba(0,0,0,0.15);
-  text-align: center; max-width: 420px; width: 100%;
-  padding: 48px 36px 36px; position: relative;
+  border-radius: var(--radius); box-shadow: var(--shadow-lg);
+  text-align: center; max-width: 400px; width: 100%;
+  padding: 40px 32px 32px; position: relative;
   margin: auto;
 }
 .lock-icon {
@@ -1267,105 +1214,6 @@ body.auth-active { overflow: hidden; }
   .voice-card { grid-template-columns: 1fr; grid-template-rows: auto 2px auto; }
   .voice-divider { width: 100%; height: 2px; }
 }
-
-/* ════════════ PROFESSIONAL ENHANCEMENTS ════════════ */
-/* Recipe cards - more premium */
-.recipe-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-.recipe-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 32px rgba(0,0,0,0.1);
-  border-color: var(--accent);
-}
-.recipe-card:active { transform: scale(0.98) translateY(0); }
-
-/* Share modal - rounder bottom sheet */
-.share-modal {
-  border-radius: 32px 32px 0 0 !important;
-}
-
-/* Stat cards */
-.stat-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.stat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
-
-/* Prevent text selection on interactive elements */
-.recipe-card, .btn, .btn-icon, .share-action-btn, .lang-opt, .chip {
-  user-select: none; -webkit-user-select: none;
-}
-
-/* Better focus states for accessibility */
-.btn:focus-visible, .btn-icon:focus-visible, .google-btn:focus-visible {
-  outline: 2px solid var(--accent); outline-offset: 2px;
-}
-
-/* Share modal drag handle */
-.share-modal::before {
-  content: '';
-  display: block; width: 40px; height: 4px;
-  background: var(--border); border-radius: 2px;
-  margin: 0 auto 16px;
-}
-
-/* Form inputs - more refined */
-.form-input, .form-select, .form-textarea {
-  background: var(--surface) !important;
-  border: 1.5px solid var(--border) !important;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
-}
-.form-input:focus, .form-select:focus, .form-textarea:focus {
-  border-color: var(--accent) !important;
-  box-shadow: 0 0 0 3px var(--glow) !important;
-  outline: none !important;
-}
-
-/* Improved badge for user nav */
-.nav-user-badge {
-  transition: all 0.2s ease;
-}
-.nav-user-badge:hover { border-color: var(--accent); box-shadow: 0 2px 10px var(--glow); }
-
-/* Section headings in recipe view */
-.recipe-section h3 {
-  font-family: var(--font-display);
-  font-size: 1rem !important;
-  font-weight: 700;
-  color: var(--accent);
-  margin-bottom: 12px;
-  display: flex; align-items: center; gap: 8px;
-}
-
-/* Mobile: better touch targets */
-@media (max-width: 640px) {
-  .btn { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
-  .btn-icon { min-width: 44px; min-height: 44px; width: 44px; height: 44px; }
-  .share-action-btn { min-height: 88px; }
-  .lang-opt { min-height: 36px; }
-  .google-btn { min-height: 54px; font-size: 1rem; }
-  .lock-contact-btn { min-height: 52px; font-size: 0.9rem; }
-}
-
-/* Smooth scrolling */
-html { scroll-behavior: smooth; }
-
-/* Link dialog animation */
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 </style>
 </head>
 <body data-theme="warm" data-mode="light" data-lang="en" data-font="classic" data-corner="round">
@@ -1452,12 +1300,12 @@ html { scroll-behavior: smooth; }
     <!-- Shared recipe preview banner (shown only when ?import= is in URL) -->
     <div id="sharedRecipeBanner" style="display:none;
       background:var(--accent-light);border:1.5px solid var(--accent);
-      border-radius:14px;padding:14px 16px;margin-bottom:20px;text-align:right;cursor:pointer;
+      border-radius:14px;padding:14px 16px;margin-bottom:20px;cursor:pointer;
       transition:all .2s;" onclick="_previewSharedRecipe()">
-      <div style="font-size:0.65rem;letter-spacing:.1em;font-weight:700;color:var(--accent);text-transform:uppercase;margin-bottom:6px;" id="sharedBannerLabel">📬 …</div>
+      <div style="font-size:0.65rem;letter-spacing:.1em;font-weight:700;color:var(--accent);text-transform:uppercase;margin-bottom:6px;" id="sharedBannerLabel">📬 Recipe shared with you</div>
       <div style="font-size:1rem;font-weight:700;color:var(--text);" id="sharedBannerTitle">...</div>
       <div style="font-size:0.75rem;color:var(--text3);margin-top:4px;" id="sharedBannerMeta"></div>
-      <div style="font-size:0.72rem;color:var(--accent);margin-top:8px;font-weight:600;" id="sharedBannerPreview">👁 …</div>
+      <div style="font-size:0.72rem;color:var(--accent);margin-top:8px;font-weight:600;" id="sharedBannerCta">👁 Tap to preview →</div>
     </div>
 
     <div class="auth-icon">📖</div>
@@ -1883,49 +1731,36 @@ html { scroll-behavior: smooth; }
 <div class="share-modal-overlay" id="shareModal" onclick="closeShareModal(event)">
   <div class="share-modal">
     <div class="share-modal-title">
-      <span id="txt-shareTitle">Share Recipe</span>
-      <button class="btn-icon" onclick="closeShareModal(null)" style="font-size:0.85rem;width:34px;height:34px;">✕</button>
+      <span class="share-modal-title-text">🔗 <span id="txt-shareTitle">Share Recipe</span></span>
+      <button class="btn-icon share-close-btn" onclick="closeShareModal(null)" aria-label="Close">✕</button>
     </div>
 
     <div class="share-section-label" id="txt-shareAsText">📄 Share as Text</div>
     <div class="share-btn-row">
-      <button class="share-action-btn share-action-copy" onclick="shareRecipeText('copy')">
-        <span class="share-btn-icon-wrap">📋</span>
-        <span id="txt-shareCopy">Copy Text</span>
+      <button class="share-action-btn" onclick="shareRecipeText('copy')">
+        <span class="share-icon">📋</span> <span id="txt-shareCopy">Copy Text</span>
       </button>
-      <button class="share-action-btn share-action-whatsapp" onclick="shareRecipeText('whatsapp')">
-        <span class="share-btn-icon-wrap">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </span>
-        <span id="txt-shareWhatsapp">WhatsApp</span>
+      <button class="share-action-btn" onclick="shareRecipeText('whatsapp')">
+        <span class="share-icon">💬</span> <span id="txt-shareWhatsapp">WhatsApp</span>
       </button>
-      <button class="share-action-btn share-action-more" onclick="shareRecipeText('native')">
-        <span class="share-btn-icon-wrap">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        </span>
-        <span id="txt-shareNative">More...</span>
+      <button class="share-action-btn" onclick="shareRecipeText('email')">
+        <span class="share-icon">✉️</span> <span id="txt-shareEmail">Email</span>
+      </button>
+      <button class="share-action-btn" id="btnShareNative" onclick="shareRecipeText('native')">
+        <span class="share-icon">📤</span> <span id="txt-shareNative">More...</span>
       </button>
     </div>
 
-    <div class="share-section-label" id="txt-shareAsLink">🔗 Share Link</div>
+    <div class="share-section-label" id="txt-shareAsLink">🔗 Share Link (for app users)</div>
     <div class="share-btn-row">
-      <button class="share-action-btn share-action-link" onclick="shareRecipeLink('copy')">
-        <span class="share-btn-icon-wrap">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        </span>
-        <span id="txt-shareLinkCopy">Copy Link</span>
+      <button class="share-action-btn" onclick="shareRecipeLink('copy')">
+        <span class="share-icon">🔗</span> <span id="txt-shareLinkCopy">Copy Link</span>
       </button>
-      <button class="share-action-btn share-action-whatsapp" onclick="shareRecipeLink('whatsapp')">
-        <span class="share-btn-icon-wrap">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </span>
-        <span id="txt-shareLinkWhatsapp">Link via WhatsApp</span>
+      <button class="share-action-btn" onclick="shareRecipeLink('whatsapp')">
+        <span class="share-icon">💬</span> <span id="txt-shareLinkWhatsapp">Link via WhatsApp</span>
       </button>
-      <button class="share-action-btn share-action-more" onclick="shareRecipeLink('native')">
-        <span class="share-btn-icon-wrap">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        </span>
-        <span id="txt-shareNative2">More...</span>
+      <button class="share-action-btn" onclick="shareRecipeLink('email')">
+        <span class="share-icon">✉️</span> <span id="txt-shareLinkEmail">Link via Email</span>
       </button>
     </div>
   </div>
@@ -1938,8 +1773,7 @@ html { scroll-behavior: smooth; }
 let recipes = JSON.parse(localStorage.getItem('recipes') || '[]');
 let currentTheme = localStorage.getItem('theme') || 'warm';
 let currentMode = localStorage.getItem('mode') || 'light';
-// عند مشاركة وصفة (import في URL) → اللغة عربي افتراضياً إن لم يكن للمستخدم تفضيل محفوظ
-let currentLang = localStorage.getItem('lang') || (new URLSearchParams(window.location.search).has('import') ? 'ar' : 'en');
+let currentLang = localStorage.getItem('lang') || 'en';
 let currentDeco = localStorage.getItem('deco') || 'minimal';
 let currentFontSize = localStorage.getItem('fontsize') || 'md';
 let currentCorner = localStorage.getItem('corner') || 'round';
@@ -2009,10 +1843,10 @@ const T = {
     copyTranscript:'Copy',addToNotes:'Add to Notes',clearTranscript:'Clear',
     share:'Share',shareTitle:'Share Recipe',shareAsText:'📄 Share as Text',shareAsLink:'🔗 Share Link (for app users)',
     shareCopy:'Copy Text',shareWhatsapp:'WhatsApp',shareNative:'More...',
+    shareEmail:'Email',shareLinkEmail:'Link via Email',shareEmailSubject:'Recipe: ',
     shareLinkCopy:'Copy Link',shareLinkWhatsapp:'Link via WhatsApp',
     importConfirm:'Add this recipe to your notebook?',
-    sharedBannerLabel:'📬 A recipe was shared with you',
-    sharedBannerPreview:'👁 Tap to preview →',
+    sharedBannerLabel:'📬 Recipe shared with you',sharedBannerCta:'👁 Tap to preview →',
   },
   fr: {
     brandTitle:'Livre de Recettes',brandSub:'CUISINER AVEC AMOUR',
@@ -2066,10 +1900,10 @@ const T = {
     copyTranscript:'Copier',addToNotes:'Ajouter aux notes',clearTranscript:'Effacer',
     share:'Partager',shareTitle:'Partager la Recette',shareAsText:'📄 Partager en texte',shareAsLink:'🔗 Lien (pour utilisateurs)',
     shareCopy:'Copier le texte',shareWhatsapp:'WhatsApp',shareNative:'Autres...',
+    shareEmail:'E-mail',shareLinkEmail:'Lien par e-mail',shareEmailSubject:'Recette : ',
     shareLinkCopy:'Copier le lien',shareLinkWhatsapp:'Lien via WhatsApp',
     importConfirm:'Ajouter cette recette à votre carnet?',
-    sharedBannerLabel:'📬 Une recette a été partagée avec vous',
-    sharedBannerPreview:'👁 Appuyer pour prévisualiser →',
+    sharedBannerLabel:'📬 Recette partagée avec vous',sharedBannerCta:'👁 Toucher pour prévisualiser →',
   },
   ar: {
     brandTitle:'كتاب الوصفات',brandSub:'الطبخ بمحبة',
@@ -2124,10 +1958,10 @@ const T = {
     copyTranscript:'نسخ',addToNotes:'أضف للملاحظات',clearTranscript:'مسح',
     share:'مشاركة',shareTitle:'مشاركة الوصفة',shareAsText:'📄 مشاركة كنص',shareAsLink:'🔗 مشاركة رابط (لمستخدمي التطبيق)',
     shareCopy:'نسخ النص',shareWhatsapp:'واتساب',shareNative:'مزيد...',
+    shareEmail:'البريد الإلكتروني',shareLinkEmail:'رابط عبر البريد',shareEmailSubject:'وصفة: ',
     shareLinkCopy:'نسخ الرابط',shareLinkWhatsapp:'رابط عبر واتساب',
     importConfirm:'إضافة هذه الوصفة إلى دفترك؟',
-    sharedBannerLabel:'📬 وصفة مشاركة معك',
-    sharedBannerPreview:'👁 اضغط للمعاينة ←',
+    sharedBannerLabel:'📬 وصفة مشاركة معك',sharedBannerCta:'👁 اضغط للمعاينة ←',
   },
 };
 
@@ -2333,7 +2167,8 @@ function updateTranslations() {
     'txt-back': t.back, 'txt-edit': t.edit, 'txt-delete': t.delete, 'txt-share': t.share,
     'txt-shareTitle': t.shareTitle, 'txt-shareAsText': t.shareAsText, 'txt-shareAsLink': t.shareAsLink,
     'txt-shareCopy': t.shareCopy, 'txt-shareWhatsapp': t.shareWhatsapp, 'txt-shareNative': t.shareNative,
-    'txt-shareLinkCopy': t.shareLinkCopy, 'txt-shareLinkWhatsapp': t.shareLinkWhatsapp, 'txt-shareNative2': t.shareNative,
+    'txt-shareEmail': t.shareEmail, 'txt-shareLinkEmail': t.shareLinkEmail,
+    'txt-shareLinkCopy': t.shareLinkCopy, 'txt-shareLinkWhatsapp': t.shareLinkWhatsapp,
     'txt-customize': t.customize, 'lbl-colorTheme': t.colorTheme,
     'lbl-decoStyle': t.decoStyle, 'lbl-mode': t.mode, 'lbl-language': t.language,
     'lbl-fontStyle': t.fontStyle, 'lbl-cornerStyle': t.cornerStyle,
@@ -2349,6 +2184,7 @@ function updateTranslations() {
     'dc-waves': t.dcWaves, 'dc-stars': t.dcStars, 'dc-dots': t.dcDots,
     'dc-herbarium': t.dcHerbarium, 'dc-tiles': t.dcTiles,
     'co-round': t.coRound, 'co-sharp': t.coSharp, 'co-pill': t.coPill,
+    'sharedBannerLabel': t.sharedBannerLabel, 'sharedBannerCta': t.sharedBannerCta,
   };
   for (const [id, val] of Object.entries(ids)) {
     const el = document.getElementById(id);
@@ -2400,12 +2236,6 @@ function updateTranslations() {
   if (lockLogoutEl) lockLogoutEl.textContent = t.lockLogout;
   const lockCheckingEl = document.getElementById('lockCheckingMsg');
   if (lockCheckingEl) lockCheckingEl.textContent = t.lockChecking;
-
-  // ---- Shared recipe banner labels ----
-  const bannerLabelEl = document.getElementById('sharedBannerLabel');
-  if (bannerLabelEl && t.sharedBannerLabel) bannerLabelEl.textContent = t.sharedBannerLabel;
-  const bannerPreviewEl = document.getElementById('sharedBannerPreview');
-  if (bannerPreviewEl && t.sharedBannerPreview) bannerPreviewEl.textContent = t.sharedBannerPreview;
 
   // ---- Add/Edit Recipe modal placeholders ----
   const ph = {
@@ -2942,44 +2772,27 @@ function _refreshSignInAvailability() {
   if (btn) btn.disabled = !enabled;
 }
 
-function _isMobileBrowser() {
-  return /iPhone|iPad|iPod|Android|Mobile|webOS/i.test(navigator.userAgent);
-}
-
 function doSignInWithGoogle() {
   if (!window._fbReady) { _refreshSignInAvailability(); return; }
   const btn = document.getElementById('googleSignInBtn');
   const errEl = document.getElementById('authError');
   if (errEl) errEl.style.display = 'none';
-  const t = T[currentLang] || T.en;
-  if (btn) { btn.disabled = true; document.getElementById('googleSignInBtnText').textContent = currentLang === 'ar' ? 'جارٍ تسجيل الدخول…' : 'Signing in…'; }
-
-  // على iOS وأندرويد نستخدم Redirect مباشرة (Popup لا يعمل جيداً على موبايل)
-  if (_isMobileBrowser()) {
-    window._fbSignInWithRedirect(window._fbAuth, window._fbProvider).catch(err => {
-      console.error('Sign-in redirect error:', err);
-      if (errEl) {
-        errEl.textContent = (currentLang === 'ar' ? 'فشل تسجيل الدخول: ' : 'Sign-in failed: ') + (err.message || '');
-        errEl.style.display = 'block';
-      }
-      if (btn) { btn.disabled = false; document.getElementById('googleSignInBtnText').textContent = t.googleSignIn; }
-    });
-    return;
-  }
+  if (btn) { btn.disabled = true; document.getElementById('googleSignInBtnText').textContent = 'Signing in…'; }
 
   window._fbSignInWithPopup(window._fbAuth, window._fbProvider)
     .catch(err => {
       console.error('Sign-in error:', err);
-      if (err && (err.code === 'auth/popup-blocked' || err.code === 'auth/cancelled-popup-request' || err.code === 'auth/popup-closed-by-user')) {
+      // Popups get blocked on some mobile browsers — fall back to redirect.
+      if (err && (err.code === 'auth/popup-blocked' || err.code === 'auth/cancelled-popup-request')) {
         return window._fbSignInWithRedirect(window._fbAuth, window._fbProvider);
       }
       if (errEl) {
-        errEl.textContent = (currentLang === 'ar' ? 'فشل تسجيل الدخول: ' : 'Sign-in failed: ') + (err.message || 'please try again.');
+        errEl.textContent = 'Sign-in failed: ' + (err.message || 'please try again.');
         errEl.style.display = 'block';
       }
     })
     .finally(() => {
-      if (btn) { btn.disabled = false; document.getElementById('googleSignInBtnText').textContent = t.googleSignIn; }
+      if (btn) { btn.disabled = false; document.getElementById('googleSignInBtnText').textContent = 'Sign in with Google'; }
     });
 }
 
@@ -3351,6 +3164,11 @@ function clearTranscript() {
 // SHARE
 // ══════════════════════════════════════════════
 function openShareModal() {
+  // "More..." only makes sense where the OS share sheet exists (mostly
+  // mobile). On desktop browsers without navigator.share, hide it so
+  // there's no button that silently does nothing when tapped.
+  const nativeBtn = document.getElementById('btnShareNative');
+  if (nativeBtn) nativeBtn.style.display = navigator.share ? '' : 'none';
   document.getElementById('shareModal').classList.add('show');
 }
 function closeShareModal(e) {
@@ -3392,22 +3210,40 @@ function shareRecipeText(method) {
   if (!r) return;
   const text = _buildRecipeText(r);
 
-  const t = T[currentLang] || T.en;
   if (method === 'copy') {
-    _copyToClipboard(text, '✓ ' + (t.shareCopy || 'Copied!'));
-    closeShareModal(null);
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('✓ ' + r.title);
+      closeShareModal(null);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      showToast('✓ Copied!');
+      closeShareModal(null);
+    });
   } else if (method === 'whatsapp') {
-    window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+    const url = 'https://wa.me/?text=' + encodeURIComponent(text);
+    window.open(url, '_blank');
+    closeShareModal(null);
+  } else if (method === 'email') {
+    const t = T[currentLang] || T.en;
+    const subject = (t.shareEmailSubject || 'Recipe: ') + r.title;
+    window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
     closeShareModal(null);
   } else if (method === 'native') {
+    // navigator.share is unavailable on most desktop browsers — instead of
+    // failing silently there, fall back to copying so the button always
+    // does something visible for the user.
     if (navigator.share) {
-      navigator.share({ title: r.title, text: text }).then(() => closeShareModal(null)).catch(() => {
-        _copyToClipboard(text, '✓ ' + (t.shareCopy || 'Copied!'));
-        closeShareModal(null);
-      });
+      navigator.share({ title: r.title, text: text })
+        .then(() => closeShareModal(null))
+        .catch((err) => {
+          // AbortError = user cancelled the native sheet themselves; do nothing.
+          if (err && err.name === 'AbortError') return;
+          navigator.clipboard.writeText(text).then(() => { showToast('✓ Copied!'); closeShareModal(null); });
+        });
     } else {
-      _copyToClipboard(text, '✓ ' + (t.shareCopy || 'Copied!'));
-      closeShareModal(null);
+      navigator.clipboard.writeText(text).then(() => { showToast('✓ Copied!'); closeShareModal(null); });
     }
   }
 }
@@ -3416,105 +3252,37 @@ function shareRecipeLink(method) {
   const r = recipes.find(x => x.id === viewingId);
   if (!r) return;
 
+  // Encode the recipe as a compact base64 URL param so the recipient
+  // can open it in their own copy of the app (the photo is excluded
+  // to keep the URL short; everything else is included).
   const payload = { ...r };
-  delete payload.photo;
+  delete payload.photo; // skip photo to keep URL manageable
   let encoded;
   try { encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload)))); } catch(e) { encoded = ''; }
-
-  let baseUrl = window.location.href.split('?')[0].split('#')[0];
-  // على الكمبيوتر (file:// أو localhost) نحاول استخدام URL محفوظ أو نعرض مربع الرابط
-  if (window.location.protocol === 'file:' || window.location.hostname === 'localhost') {
-    const hostedUrl = localStorage.getItem('hostedUrl');
-    if (hostedUrl) {
-      baseUrl = hostedUrl.split('?')[0].split('#')[0];
-    } else {
-      // نبني الرابط مع عنوان placeholder ونعرضه للمستخدم ليتمكن من نسخه
-      _showLinkDialog('https://YOUR-SITE-URL/cookbook_v6.html?import=' + encoded, r.title);
-      return;
-    }
-  }
+  const baseUrl = window.location.href.split('?')[0].split('#')[0];
   const link = baseUrl + '?import=' + encoded;
+
   const t = T[currentLang] || T.en;
   const msg = '📖 ' + r.title + '\n\n' + link;
 
   if (method === 'copy') {
-    _copyToClipboard(link, '🔗 ' + (t.shareLinkCopy || 'Link copied!'));
-    closeShareModal(null);
+    navigator.clipboard.writeText(link).then(() => {
+      showToast('🔗 ' + (t.shareLinkCopy || 'Link copied!'));
+      closeShareModal(null);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = link; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      showToast('🔗 Copied!'); closeShareModal(null);
+    });
   } else if (method === 'whatsapp') {
     window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
     closeShareModal(null);
-  } else if (method === 'native') {
-    if (navigator.share) {
-      navigator.share({ title: r.title, url: link }).then(() => closeShareModal(null)).catch(() => {
-        _copyToClipboard(link, '🔗 ' + (t.shareLinkCopy || 'Link copied!'));
-        closeShareModal(null);
-      });
-    } else {
-      _copyToClipboard(link, '🔗 ' + (t.shareLinkCopy || 'Link copied!'));
-      closeShareModal(null);
-    }
+  } else if (method === 'email') {
+    const subject = (t.shareEmailSubject || 'Recipe: ') + r.title;
+    window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(msg);
+    closeShareModal(null);
   }
-}
-
-function _copyToClipboard(text, toastMsg) {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(() => showToast(toastMsg)).catch(() => {
-      _copyFallback(text, toastMsg);
-    });
-  } else {
-    _copyFallback(text, toastMsg);
-  }
-}
-
-function _copyFallback(text, toastMsg) {
-  try {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none;';
-    document.body.appendChild(ta);
-    ta.focus(); ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    showToast(toastMsg);
-  } catch(e) {
-    _showLinkDialog(text, '');
-  }
-}
-
-function _showLinkDialog(link, title) {
-  const t = T[currentLang] || T.en;
-  const isAr = currentLang === 'ar';
-  const existing = document.getElementById('linkDialog');
-  if (existing) existing.remove();
-  const d = document.createElement('div');
-  d.id = 'linkDialog';
-  d.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(8px);';
-  d.innerHTML = `
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.35);animation:slideUp .3s ease;">
-      <div style="font-size:.65rem;letter-spacing:.1em;font-weight:700;color:var(--accent);text-transform:uppercase;margin-bottom:.8rem;text-align:${isAr?'right':'left'}">
-        🔗 ${isAr ? 'رابط المشاركة' : 'Share Link'}
-      </div>
-      ${title ? `<div style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.8rem;text-align:${isAr?'right':'left'}">${title}</div>` : ''}
-      <div style="display:flex;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:1rem;">
-        <input id="linkDialogInput" value="${link}" readonly style="flex:1;border:none;background:transparent;color:var(--text2);font-size:.78rem;font-family:monospace;outline:none;min-width:0;" onclick="this.select()"/>
-      </div>
-      <div style="display:flex;gap:.7rem;">
-        <button onclick="document.getElementById('linkDialog').remove()" style="flex:1;padding:10px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:transparent;color:var(--text2);font-family:var(--font-body);font-weight:700;cursor:pointer;">
-          ${isAr ? 'إغلاق' : 'Close'}
-        </button>
-        <button onclick="
-          const inp = document.getElementById('linkDialogInput');
-          inp.select();
-          if(navigator.clipboard){navigator.clipboard.writeText(inp.value).then(()=>{document.getElementById('linkDialog').remove();window.showToast('🔗 ${isAr?'تم نسخ الرابط':'Link copied!'}');});}
-          else{document.execCommand('copy');document.getElementById('linkDialog').remove();window.showToast('🔗 ${isAr?'تم نسخ الرابط':'Copied!'}');}
-        " style="flex:2;padding:10px;border-radius:var(--radius-sm);border:none;background:var(--accent);color:#fff;font-family:var(--font-body);font-weight:700;cursor:pointer;">
-          📋 ${isAr ? 'نسخ الرابط' : 'Copy Link'}
-        </button>
-      </div>
-    </div>`;
-  document.body.appendChild(d);
-  d.addEventListener('click', e => { if (e.target === d) d.remove(); });
-  setTimeout(() => { const inp = document.getElementById('linkDialogInput'); if(inp) inp.select(); }, 100);
 }
 
 // Check on load if there's an import param in the URL
