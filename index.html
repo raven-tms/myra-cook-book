@@ -577,6 +577,48 @@ body[data-lang="ar"] .tips-box { border-left: none; border-right: 3px solid var(
 .view-actions-left { display: flex; gap: 8px; flex: 1; flex-wrap: wrap; }
 .view-actions-right { display: flex; gap: 8px; flex-wrap: wrap; }
 
+/* ── Redesigned recipe-view toolbar ── */
+.view-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 1.25rem; flex-wrap: wrap;
+}
+.view-back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 4px; border: none; background: transparent; cursor: pointer;
+  color: var(--text2); font-family: var(--font-body); font-weight: 700; font-size: 0.86rem;
+  transition: var(--transition); border-radius: var(--radius-sm);
+}
+.view-back-link .arrow { transition: transform var(--transition); font-size: 1rem; }
+.view-back-link:hover { color: var(--accent); }
+.view-back-link:hover .arrow { transform: translateX(-3px); }
+[dir="rtl"] .view-back-link:hover .arrow { transform: translateX(3px); }
+.view-toolbar-group {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 999px; padding: 5px; box-shadow: var(--shadow);
+}
+.view-toolbar-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 38px; height: 38px; border-radius: 50%;
+  border: none; background: transparent; color: var(--text2);
+  font-size: 1rem; cursor: pointer; transition: var(--transition);
+  position: relative;
+}
+.view-toolbar-btn:hover { background: var(--accent-light); color: var(--accent); transform: translateY(-2px); }
+.view-toolbar-btn.danger { color: #e44; }
+.view-toolbar-btn.danger:hover { background: rgba(228,68,68,0.14); color: #e44; }
+.view-toolbar-divider { width: 1px; align-self: stretch; margin: 4px 2px; background: var(--border); }
+.view-toolbar-btn .tooltip {
+  position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%) translateY(-4px);
+  background: var(--text); color: var(--bg); font-size: 0.65rem; font-weight: 700;
+  padding: 4px 8px; border-radius: 6px; white-space: nowrap;
+  opacity: 0; pointer-events: none; transition: var(--transition); letter-spacing: .02em;
+}
+.view-toolbar-btn:hover .tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
+@media (max-width: 480px) {
+  .view-toolbar-btn .tooltip { display: none; }
+}
+
 /* ── Share Modal ── */
 .share-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.55);
@@ -660,6 +702,35 @@ body[data-lang="ar"] .tips-box { border-left: none; border-right: 3px solid var(
   margin-bottom: 1.15rem; display: flex; align-items: center; justify-content: space-between;
 }
 .share-modal-title-text { display: flex; align-items: center; gap: 8px; }
+/* ══ DELETE CONFIRM MODAL ══ */
+.confirm-modal { text-align: center; max-width: 380px; }
+.confirm-modal-icon {
+  width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 1rem;
+  display: flex; align-items: center; justify-content: center; font-size: 1.7rem;
+  background: linear-gradient(145deg, rgba(228,68,68,0.16), rgba(228,68,68,0.06));
+  border: 1px solid rgba(228,68,68,0.25);
+}
+.confirm-modal-title {
+  font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--text);
+  margin-bottom: .5rem;
+}
+.confirm-modal-text {
+  font-family: var(--font-body); font-size: .88rem; color: var(--text3); line-height: 1.5;
+  margin-bottom: 1.4rem;
+}
+.confirm-modal-actions { display: flex; gap: .7rem; }
+.confirm-modal-actions .btn-cancel {
+  flex: 1; padding: 12px; border-radius: var(--radius-sm); cursor: pointer;
+  border: 1.5px solid var(--border); background: transparent; color: var(--text2);
+  font-family: var(--font-body); font-size: .88rem; font-weight: 700; transition: var(--transition);
+}
+.confirm-modal-actions .btn-cancel:hover { background: var(--surface); }
+.confirm-modal-actions .btn-danger {
+  flex: 1; padding: 12px; border-radius: var(--radius-sm); cursor: pointer; border: none;
+  background: #e44; color: #fff; font-family: var(--font-body); font-size: .88rem; font-weight: 700;
+  transition: var(--transition); box-shadow: 0 6px 18px rgba(228,68,68,0.3);
+}
+.confirm-modal-actions .btn-danger:hover { background: #d33; }
 .share-close-btn {
   width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
   border-radius: 50%; border: 1px solid var(--border); background: var(--surface);
@@ -1499,7 +1570,7 @@ body.auth-active { overflow: hidden; }
     <div id="navUserBadge" class="nav-user-badge" style="display:none">
       <div class="nav-user-avatar" id="navUserAvatar">?</div>
       <span class="nav-user-name" id="navUserName"></span>
-      <button class="nav-signout-btn" id="navSignOutBtn" onclick="doSignOut()">Sign out</button>
+      <button class="nav-signout-btn" id="navSignOutBtn" onclick="doSignOut()"><span id="txt-signOut">Sign out</span></button>
     </div>
   </div>
 </nav>
@@ -1722,13 +1793,29 @@ body.auth-active { overflow: hidden; }
 
 <!-- RECIPE VIEW PAGE -->
 <div class="page" id="page-view">
-  <div class="view-actions">
-    <button class="btn" onclick="showPage('list')">← <span id="txt-back">Back</span></button>
-    <button class="btn" onclick="editCurrentRecipe()" id="btn-edit">✏️ <span id="txt-edit">Edit</span></button>
-    <button class="btn" onclick="openShareModal()" id="btn-share" style="border-color:var(--accent2);color:var(--accent2);">🔗 <span id="txt-share">Share</span></button>
-    <button class="btn" style="border-color:#e44;color:#e44;" onclick="deleteCurrentRecipe()" id="btn-delete">🗑️ <span id="txt-delete">Delete</span></button>
+  <div class="view-toolbar">
+    <button class="view-back-link" onclick="goBackFromView()"><span class="arrow">←</span> <span id="txt-back">Back</span></button>
+    <div class="view-toolbar-group">
+      <button class="view-toolbar-btn" onclick="editCurrentRecipe()" id="btn-edit">✏️<span class="tooltip" id="txt-edit">Edit</span></button>
+      <button class="view-toolbar-btn" onclick="openShareModal()" id="btn-share">🔗<span class="tooltip" id="txt-share">Share</span></button>
+      <div class="view-toolbar-divider"></div>
+      <button class="view-toolbar-btn danger" onclick="deleteCurrentRecipe()" id="btn-delete">🗑️<span class="tooltip" id="txt-delete">Delete</span></button>
+    </div>
   </div>
   <div id="recipeViewContent"></div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="share-modal-overlay" id="confirmModal" onclick="closeConfirmModal(event)">
+  <div class="share-modal confirm-modal">
+    <div class="confirm-modal-icon">🗑️</div>
+    <div class="confirm-modal-title" id="confirmModalTitle">Delete this recipe?</div>
+    <div class="confirm-modal-text" id="confirmModalText">This action can't be undone.</div>
+    <div class="confirm-modal-actions">
+      <button class="btn-cancel" id="confirmModalCancel" onclick="closeConfirmModal(null)">Cancel</button>
+      <button class="btn-danger" id="confirmModalOk">Delete</button>
+    </div>
+  </div>
 </div>
 
 <!-- SHARE MODAL -->
@@ -1789,6 +1876,7 @@ let collections = JSON.parse(localStorage.getItem('collections') || '[]');
 let currentTagFilter = null;
 let showFavoritesOnly = false;
 let currentCollectionFilter = null;
+let viewReturnPage = 'list';
 
 // ══════════════════════════════════════════════
 // TRANSLATIONS
@@ -1831,6 +1919,7 @@ const T = {
     lockInstagram:'📸 Instagram — llilmyra',
     lockEmail:'📧 Email — lazragamira1@gmail.com',
     lockLogout:'⬡ Sign out or switch account',
+    signOut:'Sign out', signOutConfirm:'Sign out of your account?',
     lockChecking:'⏳ Checking subscription status...',
     phTitle:'What are you cooking?',phPrep:'e.g. 15 mins',phCook:'e.g. 30 mins',
     phServings:'e.g. 4 people',phTags:'vegan, quick...',
@@ -1888,6 +1977,7 @@ const T = {
     lockInstagram:'📸 Instagram — llilmyra',
     lockEmail:'📧 E-mail — lazragamira1@gmail.com',
     lockLogout:'⬡ Déconnexion ou changer de compte',
+    signOut:'Déconnexion', signOutConfirm:'Se déconnecter de votre compte ?',
     lockChecking:"⏳ Vérification de l'abonnement...",
     phTitle:'Que cuisinez-vous ?',phPrep:'ex. 15 min',phCook:'ex. 30 min',
     phServings:'ex. 4 personnes',phTags:'végétarien, rapide...',
@@ -1946,6 +2036,7 @@ const T = {
     lockInstagram:'📸 إنستغرام — llilmyra',
     lockEmail:'📧 البريد — lazragamira1@gmail.com',
     lockLogout:'⬡ تسجيل الخروج أو تبديل الحساب',
+    signOut:'تسجيل الخروج', signOutConfirm:'هل تريد تسجيل الخروج من حسابك؟',
     lockChecking:'⏳ جارٍ التحقق من حالة الاشتراك...',
     phTitle:'ما الذي تطبخه؟',phPrep:'مثلاً: 15 دقيقة',phCook:'مثلاً: 30 دقيقة',
     phServings:'مثلاً: 4 أشخاص',phTags:'نباتي، سريع...',
@@ -2169,6 +2260,7 @@ function updateTranslations() {
     'lbl-method': t.method, 'lbl-tips': t.tips,
     'hint-ingredients': t.hintIngredients, 'hint-method': t.hintMethod,
     'txt-back': t.back, 'txt-edit': t.edit, 'txt-delete': t.delete, 'txt-share': t.share,
+    'txt-signOut': t.signOut,
     'txt-shareTitle': t.shareTitle, 'txt-shareAsText': t.shareAsText, 'txt-shareAsLink': t.shareAsLink,
     'txt-shareCopy': t.shareCopy, 'txt-shareWhatsapp': t.shareWhatsapp, 'txt-shareNative': t.shareNative,
     'txt-shareEmail': t.shareEmail, 'txt-shareLinkEmail': t.shareLinkEmail,
@@ -2340,6 +2432,38 @@ function showPage(name) {
 }
 
 // ══════════════════════════════════════════════
+// THEMED CONFIRM MODAL (replaces native confirm())
+// ══════════════════════════════════════════════
+let _confirmModalResolveFn = null;
+function showConfirmModal(opts) {
+  const t = T[currentLang] || T.en;
+  const title = (opts && opts.title) || t.deleteConfirm || 'Are you sure?';
+  const text = (opts && opts.text) || '';
+  const okLabel = (opts && opts.okLabel) || t.delete || 'Delete';
+  const cancelLabel = (opts && opts.cancelLabel) || t.cancel || 'Cancel';
+  const icon = (opts && opts.icon) || '🗑️';
+  document.getElementById('confirmModalTitle').textContent = title;
+  const textEl = document.getElementById('confirmModalText');
+  textEl.textContent = text;
+  textEl.style.display = text ? 'block' : 'none';
+  document.querySelector('#confirmModal .confirm-modal-icon').textContent = icon;
+  const okBtn = document.getElementById('confirmModalOk');
+  okBtn.textContent = okLabel;
+  document.getElementById('confirmModalCancel').textContent = cancelLabel;
+  const modal = document.getElementById('confirmModal');
+  modal.classList.add('show');
+  return new Promise(resolve => {
+    _confirmModalResolveFn = resolve;
+    okBtn.onclick = () => { modal.classList.remove('show'); resolve(true); _confirmModalResolveFn = null; };
+  });
+}
+function closeConfirmModal(event) {
+  if (event && event.target !== event.currentTarget) return; // only close on overlay click, not inner content
+  document.getElementById('confirmModal').classList.remove('show');
+  if (_confirmModalResolveFn) { _confirmModalResolveFn(false); _confirmModalResolveFn = null; }
+}
+
+// ══════════════════════════════════════════════
 // FORM
 // ══════════════════════════════════════════════
 function resetForm() {
@@ -2495,7 +2619,12 @@ function toggleFavorite(id) {
 // VIEW
 // ══════════════════════════════════════════════
 function viewRecipe(id) {
+  const activePage = document.querySelector('.page.active');
+  viewReturnPage = activePage ? activePage.id.replace('page-', '') : 'list';
   viewingId = id; renderView(id); showPage('view');
+}
+function goBackFromView() {
+  showPage(viewReturnPage === 'view' ? 'list' : viewReturnPage);
 }
 function renderView(id) {
   const r = recipes.find(x => x.id === id);
@@ -2557,15 +2686,16 @@ function editCurrentRecipe() {
   showPage('form');
 }
 
-function deleteCurrentRecipe() {
+async function deleteCurrentRecipe() {
   const t = T[currentLang] || T.en;
-  if (!confirm(t.deleteConfirm)) return;
+  const ok = await showConfirmModal({ title: t.deleteConfirm, icon: '🗑️' });
+  if (!ok) return;
   recipes = recipes.filter(r => r.id !== viewingId);
   localStorage.setItem('recipes', JSON.stringify(recipes));
   scheduleFirestoreSave();
   updateStats();
   showToast(t.recipeDeleted);
-  showPage('list');
+  goBackFromView();
 }
 
 // ══════════════════════════════════════════════
@@ -2635,8 +2765,9 @@ function createCollection() {
   saveCollections();
   renderCollections();
 }
-function deleteCollection(id) {
-  if (!confirm('Delete this collection?')) return;
+async function deleteCollection(id) {
+  const ok = await showConfirmModal({ title: 'Delete this collection?', icon: '🗂️' });
+  if (!ok) return;
   collections = collections.filter(c => c.id !== id);
   saveCollections();
   if (currentCollectionFilter === id) currentCollectionFilter = null;
@@ -2645,6 +2776,7 @@ function deleteCollection(id) {
 function viewCollection(id) {
   currentCollectionFilter = id;
   currentTagFilter = null;
+  viewReturnPage = 'collections';
   showPage('list');
   renderList();
 }
